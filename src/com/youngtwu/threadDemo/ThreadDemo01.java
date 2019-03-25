@@ -1,5 +1,7 @@
 package com.youngtwu.threadDemo;
 
+import com.youngtwu.threadDemo.Res;
+
 /**
  * 没有控制读写分离，一边写，一边读
  * 
