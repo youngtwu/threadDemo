@@ -45,8 +45,6 @@ class IntThrad extends Thread {
 					res.userSex = "女";
 				}
 				count = (count + 1) % 2;
-				// 唤醒当前线程
-				res.notify();
 			}
 
 		}
@@ -65,7 +63,6 @@ class OutThread extends Thread {
 		while (true) {
 			synchronized (res) {
 				System.out.println(res.userName + "--" + res.userSex);
-				res.notify();
 			}
 		}
 	}

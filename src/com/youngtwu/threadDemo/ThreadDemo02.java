@@ -1,7 +1,7 @@
 package com.youngtwu.threadDemo;
 
 /**
- * 控制读写分离，写完再读
+ * 控制读写分离，写完再读，读完再写
  * 
  * @ClassName: ThreadDemo02
  * @Description:TODO(这里用一句话描述这个类的作用)
@@ -40,7 +40,7 @@ class IntThrad02 extends Thread {
 		int count = 0;
 		while (true) {
 			synchronized (res) {
-				if (res.flag) {//true，等待
+				if (res.flag) {// res.flag=true，等待
 					try {
 						// 当前线程变为等待，但是可以释放锁
 						res.wait();
@@ -48,6 +48,7 @@ class IntThrad02 extends Thread {
 
 					}
 				}
+				System.out.println("开始写。。。。。。。");
 				if (count == 0) {
 					res.userName = "余胜军";
 					res.userSex = "男";
@@ -57,6 +58,14 @@ class IntThrad02 extends Thread {
 				}
 				count = (count + 1) % 2;
 				res.flag = true;
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println("写结束。。。。。。。");
+				System.out.println("唤醒读线程。。。。。。。");
 				// 唤醒当前线程
 				res.notify();
 			}
@@ -76,15 +85,18 @@ class OutThread02 extends Thread {
 	public void run() {
 		while (true) {
 			synchronized (res) {
-				if (!res.flag) {//false，等待
+				if (!res.flag) {// res.flag=false，等待
 					try {
 						res.wait();
 					} catch (Exception e) {
 						// TODO: handle exception
 					}
 				}
+				System.out.println("开始读。。。。。。。");
 				System.out.println(res.userName + "--" + res.userSex);
 				res.flag = false;
+				System.out.println("读结束。。。。。。。");
+				System.out.println("唤醒写线程。。。。。。。。");
 				res.notify();
 			}
 		}
