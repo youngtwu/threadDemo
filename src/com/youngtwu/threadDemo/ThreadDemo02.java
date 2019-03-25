@@ -1,16 +1,18 @@
 package com.youngtwu.threadDemo;
+
 /**
  * 控制读写分离，写完再读
- * @ClassName:  ThreadDemo02   
- * @Description:TODO(这里用一句话描述这个类的作用)   
- * @author: wuyantao 
- * @date:   2019年3月25日 下午3:24:04   
- *     
+ * 
+ * @ClassName: ThreadDemo02
+ * @Description:TODO(这里用一句话描述这个类的作用)
+ * @author: wuyantao
+ * @date: 2019年3月25日 下午3:24:04
+ * 
  * @Copyright: 2019
  */
 public class ThreadDemo02 {
 	public static void main(String[] args) {
-		Res res = new Res();
+		Res02 res = new Res02();
 		IntThrad02 intThrad = new IntThrad02(res);
 		OutThread02 outThread = new OutThread02(res);
 		intThrad.start();
@@ -27,9 +29,9 @@ class Res02 {
 }
 
 class IntThrad02 extends Thread {
-	private Res res;
+	private Res02 res;
 
-	public IntThrad02(Res res) {
+	public IntThrad02(Res02 res) {
 		this.res = res;
 	}
 
@@ -38,7 +40,7 @@ class IntThrad02 extends Thread {
 		int count = 0;
 		while (true) {
 			synchronized (res) {
-				if (res.flag) {
+				if (res.flag) {//true，等待
 					try {
 						// 当前线程变为等待，但是可以释放锁
 						res.wait();
@@ -64,9 +66,9 @@ class IntThrad02 extends Thread {
 }
 
 class OutThread02 extends Thread {
-	private Res res;
+	private Res02 res;
 
-	public OutThread02(Res res) {
+	public OutThread02(Res02 res) {
 		this.res = res;
 	}
 
@@ -74,7 +76,7 @@ class OutThread02 extends Thread {
 	public void run() {
 		while (true) {
 			synchronized (res) {
-				if (!res.flag) {
+				if (!res.flag) {//false，等待
 					try {
 						res.wait();
 					} catch (Exception e) {
