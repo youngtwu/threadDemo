@@ -2,7 +2,15 @@ package com.youngtwu.queuedemo;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
-
+/**
+ * 无边界阻塞队列，超出指定范围，添加失败
+ * @ClassName:  LinkedBlockingQueueDemo   
+ * @Description:TODO(这里用一句话描述这个类的作用)   
+ * @author: wuyantao 
+ * @date:   2019年3月26日 下午2:32:33   
+ *     
+ * @Copyright: 2019
+ */
 public class LinkedBlockingQueueDemo {
 	public static void main(String[] args) {
 		LinkedBlockingQueue<String> linkedBlockingQueue = new LinkedBlockingQueue<String>(3);
